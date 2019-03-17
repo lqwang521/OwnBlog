@@ -1,7 +1,12 @@
 ---
 title: hexo + github 搭建个人博客
 date: 2019-03-16 23:26:36
-tags: deploy
+categories: Hexo
+comments: false
+tags: 
+- Hexo
+- Next
+top: 10
 description: 使用hexo+github搭建免费个人博客详细教程
 ---
 
@@ -113,7 +118,7 @@ $ git clone https://github.com/iissnan/hexo-theme-next themes/next
 
 如果出现一些莫名其妙的问题，可以先执行hexo clean来清理一下public的内容，然后再来重新生成和发布。
 
-### 4.7 上传之前
+### 3.7 上传之前
 
 在上传代码到github之前，一定要记得先把你以前所有代码下载下来（虽然github有版本管理，但备份一下总是好的），因为从hexo提交代码时会把你以前的所有代码都删掉。
 
@@ -168,7 +173,7 @@ hexo version  #查看Hexo的版本
 
 需要特别注意的地方是，冒号后面必须有一个空格，否则可能会出问题。
 
-### 4.12 开始写博客
+### 3.12 开始写博客
 
 定位到我们的hexo根目录，执行命令：
 
@@ -195,17 +200,99 @@ description: 附加一段文章摘要，字数最好在140字以内，会出现�
 
 最终部署时生成：hexo\public\my-second-blog\index.html，但是它不会作为文章出现在博文目录。
 
-### 3.12.1 写博客工具
+#### 3.12.1 写博客工具
 
 我一种用的都是MWeb，也可以使用Typora
 
-### 3.12.2. 如何让博文列表不显示全部内容
+#### 3.12.2. 如何让博文列表不显示全部内容
 
 默认情况下，生成的博文目录会显示全部的文章内容，如何设置文章摘要的长度呢？
 
-答案是在合适的位置加上<!--more-->即可
+答案是在合适的位置加上`<!--more-->`即可
+
+
+
+## 4. 绑定域名
+
+这个是可选的，你不绑定域名肯定也是可以的，就用默认的 xxx.github.io 来访问，我是通过阿里云注册的域名，绑定域名分2种情况：带www和不带www的。
+
+域名配置最常见有2种方式，CNAME和A记录，CNAME填写域名，A记录填写IP，由于不带www方式只能采用A记录，所以必须先ping一下你的用户名.github.io的IP，然后到你的域名DNS设置页，将A记录指向你ping出来的IP，将CNAME指向你的用户名.github.io，这样可以保证无论是否添加www都可以访问
+
+
+
+然后到你的github项目根目录新建一个名为CNAME的文件（无后缀），里面填写你的域名，加不加www看你自己喜好，因为经测试：
+
+- 如果你填写的是没有www的，比如 wangliquan.site，那么无论是访问 http://www.wangliquan.site 还是 http://wangliquan.site ，都会自动跳转到 http://wangliquan.site
+- 如果你填写的是带www的，比如 www.wangliquan.site ，那么无论是访问 http://www.wangliquan.site 还是 http://wangliquan.site ，都会自动跳转到 http://www.wangliquan.site
+- 如果你填写的是其它子域名，比如 abc.wangliquan.site，那么访问 http://abc.wangliquan.site 没问题，但是访问 http://wangliquan.site ，不会自动跳转到 http://abc.wangliquan.site
+
+另外说一句，在你绑定了新域名之后，原来的`你的用户名.github.io`并没有失效，而是会自动跳转到你的新域名。
+
+
+## 5.  图片资源的处理方案
+
+
+使用完`hexo new "这是一个新的博客"`命令之后，会在source/_post文件夹里面就会出现一个“这是一个新的博客.md”的文件和一个“这是一个新的博客”的文件夹。
+
+1. 引用图片的第一种方法
+
+```
+{% asset_img 这是一个新的博客的图片.jpg 这是一个新的博客的图片的说明 %}
+```
+
+用此种方法，而不是以前的`![]()`方法，前提是你的hexo的版本是hexo3以上，到package.json里面看一下吧。如果不是hexo3以上的版本，那就只能用第二种方法了。
+
+2. hexo插件的方法
+
+[插件链接](https://link.jianshu.com/?t=https://github.com/CodeFalling/hexo-asset-image)
+
+安装
+
+```
+npm install hexo-asset-image --save
+```
+
+之后就可以按照正常的方法使用的
+
+```
+我现在写了一个段落，并且想在这个段落的某一个地方![图片上传失败...](image-43fc5f-1510018038370)引入一张图片
+```
+
+Mac有一个图床神器 iPic，在App Store中就可以下载
+
+[iPic - Markdown 图床、文件上传工具](https://toolinbox.net/iPic/)
+
+[在 iPic 中添加阿里云 OSS](https://toolinbox.net/iPic/AddAliOSS.html)
+
+
+
+## 6. 设置主题
+
+[next主题](https://github.com/iissnan/hexo-theme-next)
+
+[NexT 使用文档](https://theme-next.iissnan.com/)
+
+[Hexo-NexT配置超炫网页效果](https://www.jianshu.com/p/9f0e90cc32c2)
+
+
+
+由于busuanzi(不蒜子)的网址更新,导致了使用Hexo Next主题时统计浏览数失效.
+
+不蒜子官网:http://ibruce.info/2015/04/04/busuanzi/
+
+解决方法:
+
+到hexo的themes文件夹下, 进入
+
+\themes\next\layout_third-party\analytics\busuanzi-counter.swig
+
+将src=“https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js”
+
+修改为src=“https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js”
+
 
 ### 参考
+
 [利用GitHub搭建Hexo博客并开启HTTPS](https://www.cnblogs.com/yinxiang/p/9237488.html)
 
 [如何搭建个人博客 ？Hexo + GitHub 是一个不错的选择](https://www.jianshu.com/p/eded1dd2d794)

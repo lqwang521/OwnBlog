@@ -8,7 +8,7 @@ subtitle: 凡是你抗拒的，都会持续。
 description: 王立权的成长记录
 keywords: 王立权
 author: wangliquan
-language: 
+language: zh-Hans
 timezone:
 
 # URL
@@ -17,6 +17,20 @@ url: https://lqwang521.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
+
+menu:
+    home: /
+    about: /about
+    archives: /archives
+    tags: /tags
+    categories: /categories
+    schedule: /schedule
+    sitemap: /sitemap.xml
+
+social:
+  GitHub: https://github.com/lqwang521
+  简书: https://www.jianshu.com/u/4b70c0bd481a
+  掘金: https://juejin.im/user/59681a37f265da6c30654044
 
 # Directory
 source_dir: source
@@ -35,13 +49,13 @@ titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace:
   
 # Home page setting
@@ -90,3 +104,16 @@ auto_excerpt:
 # Local search
 local_search:
   enable: true
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+
+use_motion: true  # 开启动画效果
+three_waves: true # 开启背景动画
+
+since: 2017
+
+plugins: hexo-generate-feed
